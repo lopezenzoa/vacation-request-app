@@ -1,0 +1,10 @@
+<nav class="navbar bg-body-tertiary">
+    <div class="container d-flex justify-content-between align-items-center">
+      <a class="navbar-brand" href="/">Vacation Request App</a>
+      <% if (auth) { %>
+        <img src="/assets/profile.jpg" class="img-thumbnail rounded-circle" width="60px" alt="Profile">
+      <% } else { %>
+        <a class="btn btn-outline-primary btn-sm" href="/">Login</a>
+      <% } %>
+    </div>
+</nav>

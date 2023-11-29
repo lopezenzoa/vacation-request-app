@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<%- include("./partials/head.ejs") %>
+
+    <body>
+        <%- include("./partials/navbar.ejs") %>
+
+            <section id="content" class="container mt-5 mb-5">
+                <% if (vacations && auth) { %>
+                    <h5 class="mb-5">Next Vacations</h5>
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th scope="col">Name</th>
+                                <th scope="col">Role</th>
+                                <th scope="col">Start</th>
+                                <th scope="col">Finish</th>
+                                <th scope="col">Days</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% vacations.forEach(function(item) { %>
+                                <tr>
+                                    <td>
+                                        <%= item.name %>
+                                    </td>
+                                    <td>
+                                        <%= item.role %>
+                                    </td>
+                                    <td>
+                                        <%= item.start %>
+                                    </td>
+                                    <td>
+                                        <%= item.end %>
+                                    </td>
+                                    <td>
+                                        <%= item.days %>
+                                    </td>
+                                </tr>
+                                <% }); %>
+                        </tbody>
+                    </table>
+
+                    <% } else { %>
+                        <div class="alert alert-primary w-50" role="alert">
+                            Please login to access to your next vacations
+                        </div>
+                        <% } %>
+            </section>
+    </body>
+
+</html>
