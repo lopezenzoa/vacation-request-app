@@ -5,14 +5,54 @@ const app = express();
 // Serving static files
 app.use(express.static("public"));
 
-vacations = [
+const vacations = [
     { name: "H. G. Wells", role: "Research", start: "Nov 29th", end: "Dec 13th", days: "15" },
     { name: "Julio Verne", role: "Engineering", start: "Dec 11th", end: "Dec 16th", days: "7" },
     { name: "Silvina Ocampo", role: "Marketing", start: "Dec 17th", end: "Dec 20th", days: "4" },
 ];
 
+const profileInfo = {
+    username: "admin",
+    name: "Admin",
+    email: "enzoagustinlopez2003@gmail.com",
+    phone: "2236004953",
+    address: "3 de Febrero 5074",
+    city: "Mar del Plata",
+    team: "Development",
+    role: "Backend developer",
+    lastVacations: "Nov 29th - Dec 13th"
+};
+
+function capitalize(word) {
+    return word.charAt(0).toUpperCase() + word.slice(1);
+}
+
+let auth = false;
+
+function validate(username, password) {
+    if (username === "admin" && password === 1234) {
+        return {
+            status: "ok",
+            message: "Logged Successfully"
+        };
+    } else {
+        return {
+            status: "err",
+            message: "Please check your username or password"
+        };
+    }
+}
+
 app.get("/", (req, res) => {
-    res.render("index.ejs", { vacations: vacations, auth: true });
+    res.render("home.ejs", { vacations: vacations, auth: auth });
 });
 
-app.listen(5000);
+app.get("/profile", (req, res) => {
+    res.render("profile.ejs", { profileInfo: profileInfo, capitalize: capitalize });
+});
+
+app.get("/login", (req, res) => {
+    res.render("login.ejs", { validate: validate });
+});
+
+app.listen(3000);

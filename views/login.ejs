@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include("./partials/head.ejs") %>
+
+    <body>
+        <% let authInfo=undefined; %>
+
+            <section id="title" class="container mt-5">
+                <h5>Vacation Request App</h5>
+            </section>
+            <section id="login-form" class="container mt-5 mb-5">
+                <form class="w-50" onSubmit="<% authInfo = validate('admin', 1234) %>">
+                    <div class="mb-3">
+                        <label for="usernameInput" class="form-label">Username</label>
+                        <input type="text" class="form-control" id="usernameInput" aria-describedby="emailHelp">
+                    </div>
+                    <div class="mb-3">
+                        <label for="passwordInput" class="form-label">Password</label>
+                        <input type="password" class="form-control" id="passwordInput">
+                    </div>
+                    <button type="submit" class="btn btn-outline-primary">Login</button>
+                </form>
+            </section>
+
+            <section id="authMessage" class="container"></section>
+    </body>
+
+</html>
