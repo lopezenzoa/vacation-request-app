@@ -8,21 +8,69 @@
             <section id="title" class="container mt-5">
                 <h5>Vacation Request App</h5>
             </section>
-            <section id="login-form" class="container mt-5 mb-5">
-                <form class="w-50" onSubmit="<% authInfo = validate('admin', 1234) %>">
+            <section id="login-form-section" class="container mt-5 mb-5">
+                <form class="w-50" id="login-form">
                     <div class="mb-3">
                         <label for="usernameInput" class="form-label">Username</label>
-                        <input type="text" class="form-control" id="usernameInput" aria-describedby="emailHelp">
+                        <input type="text" class="form-control" id="usernameInput" aria-describedby="emailHelp"
+                            required>
                     </div>
                     <div class="mb-3">
                         <label for="passwordInput" class="form-label">Password</label>
-                        <input type="password" class="form-control" id="passwordInput">
+                        <input type="password" class="form-control" id="passwordInput" required>
                     </div>
                     <button type="submit" class="btn btn-outline-primary">Login</button>
                 </form>
             </section>
 
-            <section id="authMessage" class="container"></section>
+            <section id="auth-message-section" class="container"></section>
     </body>
+
+    <script defer>
+        const loginForm = document.getElementById("login-form");
+
+        // HTML sections
+        const authMessageSection = document.getElementById("auth-message-section");
+        const loginFormSection = document.getElementById("login-form-section")
+
+        loginForm.addEventListener("submit", validateUser);
+
+        function validateUser(e) {
+            e.preventDefault();
+
+            fetch("http://localhost:3000/validate", {
+                method: "post",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    username: e.target[0].value,
+                    password: e.target[1].value
+                })
+            })
+                .then((res) => res.json())
+                .then((data) => displayAuthMessage(data))
+        }
+
+        function displayAuthMessage(data) {
+            if (data.auth) {
+                loginForm.style.display = "none";
+
+                authMessageSection.innerHTML = `
+                    <div class="alert alert-success w-50" role="alert">
+                        Logged successfully! Redirecting to homepage...
+                    </div>
+                `
+                
+                setTimeout(() => window.location.href = "/", 2000);
+            } else {
+                authMessageSection.innerHTML = `
+                    <div class="alert alert-danger w-50" role="alert">
+                        Please check your username or password
+                    </div>
+                `
+            }
+        }
+    </script>
 
 </html>

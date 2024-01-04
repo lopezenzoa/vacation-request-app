@@ -4,6 +4,7 @@ const app = express();
 
 // Serving static files
 app.use(express.static("public"));
+app.use(express.json());
 
 const vacations = [
     { name: "H. G. Wells", role: "Research", start: "Nov 29th", end: "Dec 13th", days: "15" },
@@ -29,20 +30,7 @@ function capitalize(word) {
 
 let auth = false;
 
-function validate(username, password) {
-    if (username === "admin" && password === 1234) {
-        return {
-            status: "ok",
-            message: "Logged Successfully"
-        };
-    } else {
-        return {
-            status: "err",
-            message: "Please check your username or password"
-        };
-    }
-}
-
+// Loading EJS templates
 app.get("/", (req, res) => {
     res.render("home.ejs", { vacations: vacations, auth: auth });
 });
@@ -52,7 +40,19 @@ app.get("/profile", (req, res) => {
 });
 
 app.get("/login", (req, res) => {
-    res.render("login.ejs", { validate: validate });
+    res.render("login.ejs");
+});
+
+app.post("/validate", (req, res) => {
+    let auth = false;
+    const username = req.body.username;
+    const password = req.body.password;
+
+    if (username === "admin" && Number(password) === 1234) {
+        auth = true;
+    }
+
+    res.send({ auth });
 });
 
 app.listen(3000);
