@@ -19,7 +19,7 @@
                         <label for="passwordInput" class="form-label">Password</label>
                         <input type="password" class="form-control" id="passwordInput" required>
                     </div>
-                    <button type="submit" class="btn btn-outline-primary">Login</button>
+                    <button type="submit" class="btn btn-outline-primary btn-sm">Login</button>
                 </form>
             </section>
 
@@ -58,11 +58,11 @@
 
                 authMessageSection.innerHTML = `
                     <div class="alert alert-success w-50" role="alert">
-                        Logged successfully! Redirecting to homepage...
+                        Logged successfully!
                     </div>
                 `
                 
-                setTimeout(() => window.location.href = "/", 2000);
+                setTimeout(() => window.location.href = "/", 1000);
             } else {
                 authMessageSection.innerHTML = `
                     <div class="alert alert-danger w-50" role="alert">

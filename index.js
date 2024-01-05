@@ -13,6 +13,7 @@ const vacations = [
 ];
 
 const profileInfo = {
+    "Last Vacations": "Nov 29th - Dec 13th",
     username: "admin",
     name: "Admin",
     email: "enzoagustinlopez2003@gmail.com",
@@ -20,31 +21,17 @@ const profileInfo = {
     address: "3 de Febrero 5074",
     city: "Mar del Plata",
     team: "Development",
-    role: "Backend developer",
-    lastVacations: "Nov 29th - Dec 13th"
+    role: "Backend developer"
 };
 
 function capitalize(word) {
     return word.charAt(0).toUpperCase() + word.slice(1);
 }
 
-let auth = false;
-
-// Loading EJS templates
-app.get("/", (req, res) => {
-    res.render("home.ejs", { vacations: vacations, auth: auth });
-});
-
-app.get("/profile", (req, res) => {
-    res.render("profile.ejs", { profileInfo: profileInfo, capitalize: capitalize });
-});
-
-app.get("/login", (req, res) => {
-    res.render("login.ejs");
-});
+let auth = false
 
 app.post("/validate", (req, res) => {
-    let auth = false;
+    auth = false;
     const username = req.body.username;
     const password = req.body.password;
 
@@ -53,6 +40,19 @@ app.post("/validate", (req, res) => {
     }
 
     res.send({ auth });
+});
+
+// Loading EJS templates
+app.get("/", (req, res) => {
+    res.render("home.ejs", { vacations: vacations, auth: auth });
+});
+
+app.get("/login", (req, res) => {
+    res.render("login.ejs");
+});
+
+app.get("/profile", (req, res) => {
+    res.render("profile.ejs", { profileInfo: profileInfo, capitalize: capitalize, auth: auth });
 });
 
 app.listen(3000);
